@@ -16,7 +16,9 @@ public class StringCalculator
 
     private IEnumerable<int> NumbersFromDelimitedString(string numbersString)
     {
-        var splitStrings = numbersString.Split(',');
+        var delimiters = new[] {",", Environment.NewLine};
+
+        var splitStrings = numbersString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         var numbers = splitStrings.Select(int.Parse);
 
         return numbers;
