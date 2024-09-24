@@ -90,4 +90,15 @@ public class StringCalculatorTests
 
         Assert.Equal(expected, exception.Message);
     }
+
+    [Theory]
+    [InlineData("2, 1001", 2)]
+    [InlineData("2, 1001, 3", 5)]
+    public void Add_NumbersGreaterThan1000_NotSummed(string numbers, int expected)
+    {
+        var calculator = new StringCalculator();
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }

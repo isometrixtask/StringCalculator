@@ -5,6 +5,7 @@ public class StringCalculator
     private const string CustomDelimiterPrefix = "//";
     private static readonly string CustomDelimiterSuffix = Environment.NewLine;
     private static readonly string[] DefaultDelimiters = [",", Environment.NewLine];
+    private const int MaximumNumber = 1000;
 
     public int Add(string numbersString)
     {
@@ -24,6 +25,7 @@ public class StringCalculator
         var numbers = NumbersFromDelimitedString(numbersString, delimiters.ToArray());
 
         CheckForNegativeNumbers(numbers);
+        numbers = ExcludeNumbersGreaterThanMaximum(numbers);
 
         var result = numbers.Sum();
 
@@ -39,6 +41,11 @@ public class StringCalculator
         {
             throw new ArgumentException($"{negativeNumbersMessage}: {string.Join(", ", negativeNumbers)}");
         }
+    }
+
+    private IEnumerable<int> ExcludeNumbersGreaterThanMaximum(IEnumerable<int> numbers)
+    {
+        return numbers.Where(number => number <= MaximumNumber);
     }
 
     private string ExtractCustomDelimiter(string calculationString)
