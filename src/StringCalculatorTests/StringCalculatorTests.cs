@@ -15,4 +15,16 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void Add_SingleNumber_ReturnsNumber()
+    {
+        var calculator = new StringCalculator();
+
+        var numbers = "1";
+        var expected = 1;
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }
