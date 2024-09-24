@@ -1,4 +1,6 @@
-﻿namespace StringCalculatorApp;
+﻿using System.Text.RegularExpressions;
+
+namespace StringCalculatorApp;
 
 public class StringCalculator
 {
@@ -17,8 +19,8 @@ public class StringCalculator
         var customDelimitersPresent = numbersString.StartsWith(CustomDelimiterPrefix);
         if (customDelimitersPresent)
         {
-            var customDelimiter = ExtractCustomDelimiter(numbersString);
-            delimiters.Add(customDelimiter);
+            var customDelimiters = ExtractCustomDelimiters(numbersString);
+            delimiters.AddRange(customDelimiters);
             numbersString = numbersString.Split(CustomDelimiterSuffix, 2).Last();
         }
 
@@ -48,21 +50,32 @@ public class StringCalculator
         return numbers.Where(number => number <= MaximumNumber);
     }
 
-    private string ExtractCustomDelimiter(string calculationString)
+    private IEnumerable<string> ExtractCustomDelimiters(string calculationString)
     {
         var delimitersStartIndex = CustomDelimiterPrefix.Length;
         var delimitersEndIndex = calculationString.IndexOf(CustomDelimiterSuffix, StringComparison.Ordinal);
         var delimiterLength = delimitersEndIndex - delimitersStartIndex;
 
-        var customDelimiter = calculationString.Substring(delimitersStartIndex, delimiterLength);
+        var delimiterDefinitions = calculationString.Substring(delimitersStartIndex, delimiterLength);
 
-        var isEnclosedInBrackets = customDelimiter.StartsWith("[") && customDelimiter.EndsWith("]");
+        var customDelimiters = new List<string>();
+
+        var isEnclosedInBrackets = delimiterDefinitions.StartsWith("[") && delimiterDefinitions.EndsWith("]");
         if (isEnclosedInBrackets)
         {
-            customDelimiter = customDelimiter.Trim(['[', ']']);
+            var delimiterPattern = @"\[(.+?)\]";
+            var matches = Regex.Matches(delimiterDefinitions, delimiterPattern);
+            foreach (Match match in matches)
+            {
+                customDelimiters.Add(match.Groups[1].Value);
+            }
+        }
+        else
+        {
+            customDelimiters.Add(delimiterDefinitions);
         }
 
-        return customDelimiter;
+        return customDelimiters;
     }
 
     private IEnumerable<int> NumbersFromDelimitedString(string numbersString, string[] delimiters)
