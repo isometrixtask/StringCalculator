@@ -22,9 +22,23 @@ public class StringCalculator
         }
 
         var numbers = NumbersFromDelimitedString(numbersString, delimiters.ToArray());
+
+        CheckForNegativeNumbers(numbers);
+
         var result = numbers.Sum();
 
         return result;
+    }
+
+    private void CheckForNegativeNumbers(IEnumerable<int> numbers)
+    {
+        const string negativeNumbersMessage = "Negatives not allowed";
+        var negativeNumbers = numbers.Where(number => number < 0);
+        var negativeNumbersPresent = negativeNumbers.Any();
+        if (negativeNumbersPresent)
+        {
+            throw new ArgumentException($"{negativeNumbersMessage}: {string.Join(", ", negativeNumbers)}");
+        }
     }
 
     private string ExtractCustomDelimiter(string calculationString)

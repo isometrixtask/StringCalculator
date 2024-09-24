@@ -75,4 +75,19 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("1,2,-3", "Negatives not allowed: -3")]
+    [InlineData("3,-2,-1,8", "Negatives not allowed: -2, -1")]
+    [InlineData("-4,-4,-10", "Negatives not allowed: -4, -4, -10")]
+    public void Add_ContainsNegativeNumber_Throws(string numbers, string expected)
+    {
+        var calculator = new StringCalculator();
+
+        var exception  = Assert.Throws<ArgumentException>(
+            () => calculator.Add(numbers)
+        );
+
+        Assert.Equal(expected, exception.Message);
+    }
 }
