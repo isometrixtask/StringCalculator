@@ -56,6 +56,12 @@ public class StringCalculator
 
         var customDelimiter = calculationString.Substring(delimitersStartIndex, delimiterLength);
 
+        var isEnclosedInBrackets = customDelimiter.StartsWith("[") && customDelimiter.EndsWith("]");
+        if (isEnclosedInBrackets)
+        {
+            customDelimiter = customDelimiter.Trim(['[', ']']);
+        }
+
         return customDelimiter;
     }
 

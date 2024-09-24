@@ -90,4 +90,16 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void Add_MultipleCharCustomDelimiter_ReturnsSum()
+    {
+        var calculator = new StringCalculator();
+
+        var numbers = $"//[***]{Environment.NewLine}1***2***3";
+        var expected = 6;
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }
