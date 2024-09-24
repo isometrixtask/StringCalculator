@@ -16,13 +16,13 @@ public class StringCalculatorTests
         Assert.Equal(expected, result);
     }
 
-    [Fact]
-    public void Add_SingleNumber_ReturnsNumber()
+    [Theory]
+    [InlineData("1", 1)]
+    [InlineData("2", 2)]
+    [InlineData("3", 3)]
+    public void Add_SingleNumber_ReturnsNumber(string numbers, int expected)
     {
         var calculator = new StringCalculator();
-
-        var numbers = "1";
-        var expected = 1;
 
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);

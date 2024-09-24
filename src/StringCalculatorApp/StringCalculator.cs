@@ -4,8 +4,11 @@ public class StringCalculator
 {
     public int Add(string numbers)
     {
-        if (numbers == "1") return 1;
+        var noNumbers = string.IsNullOrEmpty(numbers);
+        if (noNumbers) return 0;
 
-        return 0;
+        var result = int.Parse(numbers);
+
+        return result;
     }
 }
