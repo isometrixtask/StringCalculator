@@ -114,4 +114,16 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void Add_CustomDelimitersOfVaryingLengths_ReturnsSum()
+    {
+        var calculator = new StringCalculator();
+
+        var numbers = $"//[*][>!<]{Environment.NewLine}1*2>!<3*4";
+        var expected = 10;
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }
