@@ -7,17 +7,16 @@ public class StringCalculator
         var noNumbers = string.IsNullOrEmpty(numbersString);
         if (noNumbers) return 0;
 
-        var numbers = NumbersFromDelimitedString(numbersString);
+        var delimiters = new[] { ",", Environment.NewLine };
+        var numbers = NumbersFromDelimitedString(numbersString, delimiters);
 
         var result = numbers.Sum();
 
         return result;
     }
 
-    private IEnumerable<int> NumbersFromDelimitedString(string numbersString)
+    private IEnumerable<int> NumbersFromDelimitedString(string numbersString, string[] delimiters)
     {
-        var delimiters = new[] {",", Environment.NewLine};
-
         var splitStrings = numbersString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         var numbers = splitStrings.Select(int.Parse);
 
