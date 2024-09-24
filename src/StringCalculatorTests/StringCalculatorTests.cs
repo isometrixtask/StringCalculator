@@ -27,4 +27,16 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("1,2", 3)]
+    [InlineData("3,2", 5)]
+    [InlineData("4,4", 8)]
+    public void Add_TwoNumbers_ReturnsSum(string numbers, int expected)
+    {
+        var calculator = new StringCalculator();
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }
