@@ -63,4 +63,16 @@ public class StringCalculatorTests
         var result = calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void Add_CustomDelimiter_ReturnsSum()
+    {
+        var calculator = new StringCalculator();
+
+        var numbers = $"//;{Environment.NewLine}1;2";
+        var expected = 3;
+
+        var result = calculator.Add(numbers);
+        Assert.Equal(expected, result);
+    }
 }
